@@ -10,14 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_11_223050) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_11_230439) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "foods", force: :cascade do |t|
+    t.string "name"
+    t.float "price", default: 0.0
+    t.integer "amount", default: 0
+    t.text "description"
+    t.boolean "primer", default: false
+    t.string "type"
+    t.boolean "state", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.integer "beds_number"
-    t.float "price"
-    t.boolean "state"
+    t.float "price", default: 0.0
+    t.boolean "state", default: true
     t.string "type"
     t.integer "num_room"
     t.text "description"
