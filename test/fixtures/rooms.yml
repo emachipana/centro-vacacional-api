@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  beds_number: 1
+  price: 1.5
+  state: false
+  type: 
+  num_room: 1
+  description: MyText
+
+two:
+  beds_number: 1
+  price: 1.5
+  state: false
+  type: 
+  num_room: 1
+  description: MyText
