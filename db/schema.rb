@@ -16,8 +16,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_11_223050) do
 
   create_table "rooms", force: :cascade do |t|
     t.integer "beds_number"
-    t.float "price"
-    t.boolean "state"
+    t.float "price", default: 0.0
+    t.boolean "state", default: true
     t.string "type"
     t.integer "num_room"
     t.text "description"
