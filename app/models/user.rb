@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   has_secure_token
+  has_one_attached :avatar
   belongs_to :client
 
   def invalidate_token
