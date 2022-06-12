@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  food: one
+  client: one
+  place: 1
+  state: 1
+  paid: false
+  amount: 1
+
+two:
+  food: two
+  client: two
+  place: 1
+  state: 1
+  paid: false
+  amount: 1
