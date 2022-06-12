@@ -23,23 +23,19 @@ class FoodsController < ApplicationController
   def create
     @food = Food.new(food_params)
 
-    respond_to do |format|
-      if @food.save
-        render json: :show, status: :created
-      else
-        render json: @food.errors, status: :unprocessable_entity
-      end
+    if @food.save
+      render json: :show, status: :created
+    else
+      render json: @food.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /foods/1 or /foods/1.json
   def update
-    respond_to do |format|
-      if @food.update(food_params)
-        render :show, status: :ok
-      else
-        render json: @food.errors, status: :unprocessable_entity
-      end
+    if @food.update(food_params)
+      render :show, status: :ok
+    else
+      render json: @food.errors, status: :unprocessable_entity
     end
   end
 

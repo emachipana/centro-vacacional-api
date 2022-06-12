@@ -23,23 +23,19 @@ class RoomsController < ApplicationController
   def create
     @room = Room.new(room_params)
 
-    respond_to do |format|
-      if @room.save
-        render json: @room, status: :created
-      else
-        render json: @room.errors, status: :unprocessable_entity 
-      end
+    if @room.save
+      render json: @room, status: :created
+    else
+      render json: @room.errors, status: :unprocessable_entity 
     end
   end
 
   # PATCH/PUT /rooms/1 or /rooms/1.json
   def update
-    respond_to do |format|
-      if @room.update(room_params)
-        render json: :show, status: :ok
-      else
-        render json: @room.errors, status: :unprocessable_entity
-      end
+    if @room.update(room_params)
+      render json: :show, status: :ok
+    else
+      render json: @room.errors, status: :unprocessable_entity
     end
   end
 
