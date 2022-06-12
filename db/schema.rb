@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_12_050557) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_12_051619) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -87,7 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_050557) do
     t.integer "beds_number"
     t.float "price", default: 0.0
     t.boolean "state", default: true
-    t.string "type"
+    t.string "type_room"
     t.integer "num_room"
     t.text "description"
     t.datetime "created_at", null: false
