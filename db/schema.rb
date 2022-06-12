@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_12_032317) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_12_054225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_032317) do
     t.bigint "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "stay", default: 0
+    t.index ["DNI"], name: "index_clients_on_DNI", unique: true
+    t.index ["email"], name: "index_clients_on_email", unique: true
     t.index ["room_id"], name: "index_clients_on_room_id"
   end
 
@@ -61,10 +64,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_032317) do
     t.integer "amount", default: 0
     t.text "description"
     t.boolean "primer", default: false
-    t.string "type"
     t.boolean "state", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "type_food"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -84,11 +87,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_032317) do
     t.integer "beds_number"
     t.float "price", default: 0.0
     t.boolean "state", default: true
-    t.string "type"
     t.integer "num_room"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "type_room"
+    t.index ["num_room"], name: "index_rooms_on_num_room", unique: true
   end
 
   create_table "users", force: :cascade do |t|
