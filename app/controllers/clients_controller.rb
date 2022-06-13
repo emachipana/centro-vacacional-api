@@ -2,6 +2,13 @@ class ClientsController < ApplicationController
   before_action :authorize_user, except: %i[create]
   before_action :set_client, only: %i[ update destroy ]
 
+  def num_clients
+    num = Client.all.size
+    num_clients = { num: num }
+
+    render json: num_clients, status: :ok
+  end
+
   # POST /clients or /clients.json
   def create
     @client = Client.new(client_params)
