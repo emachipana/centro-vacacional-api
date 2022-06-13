@@ -1,22 +1,16 @@
 class FoodsController < ApplicationController
-  before_action :set_food, only: %i[ show edit update destroy ]
+  before_action :authorize_user
+  before_action :set_food, only: %i[ show update destroy ]
 
   # GET /foods or /foods.json
   def index
     @foods = Food.all
+    render json: @foods, status: :ok
   end
 
   # GET /foods/1 or /foods/1.json
   def show
-  end
-
-  # GET /foods/new
-  def new
-    @food = Food.new
-  end
-
-  # GET /foods/1/edit
-  def edit
+    render json: @food, status: :ok
   end
 
   # POST /foods or /foods.json
@@ -24,7 +18,7 @@ class FoodsController < ApplicationController
     @food = Food.new(food_params)
 
     if @food.save
-      render json: :show, status: :created
+      render json: @food, status: :created
     else
       render json: @food.errors, status: :unprocessable_entity
     end
@@ -33,7 +27,7 @@ class FoodsController < ApplicationController
   # PATCH/PUT /foods/1 or /foods/1.json
   def update
     if @food.update(food_params)
-      render :show, status: :ok
+      render @food, status: :ok
     else
       render json: @food.errors, status: :unprocessable_entity
     end
@@ -52,6 +46,13 @@ class FoodsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def food_params
-      params.require(:food).permit(:name, :price, :amount, :description, :primer, :type, :state)
+      params.require(:food).permit(:name, :price, :amount, :description, :primer, :type, :state, :banner)
+    end
+
+    def authorize_user
+      return if currrent_user
+
+      errors = { errors: { message: "Acces denied" } }
+      render json: errors, status: :unauthorized
     end
 end

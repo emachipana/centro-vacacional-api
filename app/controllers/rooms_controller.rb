@@ -1,22 +1,16 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: %i[ show edit update destroy ]
+  before_action :authorize_user
+  before_action :set_room, only: %i[ show update destroy ]
 
   # GET /rooms or /rooms.json
   def index
     @rooms = Room.all
+    render json: @rooms, status: :ok
   end
 
   # GET /rooms/1 or /rooms/1.json
   def show
-  end
-
-  # GET /rooms/new
-  def new
-    @room = Room.new
-  end
-
-  # GET /rooms/1/edit
-  def edit
+    render json: @room, status: :ok
   end
 
   # POST /rooms or /rooms.json
@@ -33,7 +27,7 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/1 or /rooms/1.json
   def update
     if @room.update(room_params)
-      render json: :show, status: :ok
+      render json: @room, status: :ok
     else
       render json: @room.errors, status: :unprocessable_entity
     end
@@ -52,6 +46,13 @@ class RoomsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def room_params
-      params.require(:room).permit(:beds_number, :price, :state, :type, :num_room, :description)
+      params.require(:room).permit(:beds_number, :price, :state, :type, :num_room, :description, :banner)
+    end
+
+    def authorize_user
+      return if current_user
+
+      errors = { errors: { message: "Access denied" } }
+      render json: errors, status: :unauthorized
     end
 end
