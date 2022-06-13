@@ -5,10 +5,12 @@ class FoodsController < ApplicationController
   # GET /foods or /foods.json
   def index
     @foods = Food.all
+    render json: @foods, status: :ok
   end
 
   # GET /foods/1 or /foods/1.json
   def show
+    render json: @food, status: :ok
   end
 
   # POST /foods or /foods.json
