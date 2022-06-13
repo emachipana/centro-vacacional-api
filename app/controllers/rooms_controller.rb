@@ -5,10 +5,12 @@ class RoomsController < ApplicationController
   # GET /rooms or /rooms.json
   def index
     @rooms = Room.all
+    render json: @rooms, status: :ok
   end
 
   # GET /rooms/1 or /rooms/1.json
   def show
+    render json: @room, status: :ok
   end
 
   # POST /rooms or /rooms.json
