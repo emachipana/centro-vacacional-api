@@ -1,22 +1,11 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
-
-  # GET /users or /users.json
-  def index
-    @users = User.all
-  end
+  before_action :authorize_user, except: %i[create]
+  before_action :set_user, only: %i[ show update destroy ]
+  skip_before_action :require_login, only: [:create]
 
   # GET /users/1 or /users/1.json
   def show
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
+    render json: @user, status: :ok
   end
 
   # POST /users or /users.json
@@ -53,5 +42,13 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:username, :password_digest, :token, :client_id)
+    end
+
+    def authorize_user
+      user = User.find(params[:id])
+      return if current_user == user
+
+      errors = { errors: { message: "Access denied" } }
+      render json: errors, status: :unauthorized
     end
 end

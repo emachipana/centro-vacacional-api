@@ -1,6 +1,7 @@
 class ClientsController < ApplicationController
   before_action :authorize_user, except: %i[create]
   before_action :set_client, only: %i[ update destroy ]
+  skip_before_action :require_login, only: [:create]
 
   def num_clients
     num = Client.all.size
