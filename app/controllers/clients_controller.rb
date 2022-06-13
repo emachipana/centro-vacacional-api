@@ -40,7 +40,7 @@ class ClientsController < ApplicationController
 
     def authorize_user
       client = Client.find(params[:id]);
-      return if current_user == client.user
+      return if (current_user == client.user) || (current_user.type_user == "admin")
       
       errors = { errors: { message: "Acces denied" } }
       render json: errors, status: :unauthorized 
