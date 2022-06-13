@@ -1,30 +1,13 @@
 class ClientsController < ApplicationController
-  before_action :set_client, only: %i[ show edit update destroy ]
-
-  # GET /clients or /clients.json
-  def index
-    @clients = Client.all
-  end
-
-  # GET /clients/1 or /clients/1.json
-  def show
-  end
-
-  # GET /clients/new
-  def new
-    @client = Client.new
-  end
-
-  # GET /clients/1/edit
-  def edit
-  end
+  before_action :authorize_user, except: %i[create]
+  before_action :set_client, only: %i[ update destroy ]
 
   # POST /clients or /clients.json
   def create
     @client = Client.new(client_params)
 
     if @client.save
-      render :show, status: :created
+      render @client, status: :created
     else
       render json: @client.errors, status: :unprocessable_entity
     end
@@ -33,7 +16,7 @@ class ClientsController < ApplicationController
   # PATCH/PUT /clients/1 or /clients/1.json
   def update
     if @client.update(client_params)
-      render :show, status: :ok
+      render @client, status: :ok
     else
       render json: @client.errors, status: :unprocessable_entity
     end
@@ -53,5 +36,13 @@ class ClientsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def client_params
       params.require(:client).permit(:first_name, :last_name, :email, :phone_number, :DNI, :expenses, :room_id)
+    end
+
+    def authorize_user
+      client = Client.find(params[:id]);
+      return if current_user == client.user
+      
+      errors = { errors: { message: "Acces denied" } }
+      render json: errors, status: :unauthorized 
     end
 end
