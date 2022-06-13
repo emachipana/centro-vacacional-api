@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
+  enum type_user: { normal: 0, admin: 1 }
 
   has_secure_password
   has_secure_token
